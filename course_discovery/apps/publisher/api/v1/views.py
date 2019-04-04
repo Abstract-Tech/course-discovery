@@ -155,10 +155,10 @@ class CourseRunViewSet(viewsets.GenericViewSet):
             'max_effort': course_run.max_effort,
             'language': course_run.language,
             'weeks_to_complete': course_run.length,
-            'has_ofac_restrictions': course_run.has_ofac_restrictions
+            'has_ofac_restrictions': course_run.has_ofac_restrictions,
+            'course': discovery_course
         }
         discovery_course_run, __ = DiscoveryCourseRun.objects.update_or_create(
-            course=discovery_course,
             key=course_run.lms_course_id,
             defaults=defaults
         )
