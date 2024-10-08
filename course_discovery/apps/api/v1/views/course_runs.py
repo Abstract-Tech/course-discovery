@@ -96,7 +96,7 @@ class CourseRunViewSet(ValidElasticSearchQueryRequiredMixin, viewsets.ModelViewS
             queryset = self.queryset
 
         if q:
-            qs = SearchQuerySetWrapper(CourseRun.search(q).filter('term', partner=partner.short_code))
+            qs = SearchQuerySetWrapper(CourseRun.search(q).filter('term', partner__raw=partner.short_code))
             # This is necessary to avoid issues with the filter backend.
             qs.model = self.queryset.model
             return qs
@@ -412,7 +412,7 @@ class CourseRunViewSet(ValidElasticSearchQueryRequiredMixin, viewsets.ModelViewS
             course_run_ids = course_run_ids.split(',')
             course_runs = (
                 CourseRun.search(query)
-                .filter(ESDSLQ('term', partner=partner.short_code) & ESDSLQ('terms', **{'key.raw': course_run_ids}))
+                .filter(ESDSLQ('term', partner__raw=partner.short_code) & ESDSLQ('terms', **{'key.raw': course_run_ids}))
                 .source(['key'])
             )
             course_runs_keys = [i.key for i in course_runs]

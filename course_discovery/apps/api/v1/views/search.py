@@ -394,7 +394,7 @@ class TypeaheadSearchView(APIView):
                     ESDSLQ('match', course_key=query),
                     ESDSLQ('match', authoring_organizations__edge_ngram_completion=query),
                 ],
-                filter=[ESDSLQ('term', published=True), ESDSLQ('term', partner=partner.short_code)],
+                filter=[ESDSLQ('term', published=True), ESDSLQ('term', partner__raw=partner.short_code)],
                 must_not=ESDSLQ('term', hidden=True),
             )
         )
@@ -423,7 +423,7 @@ class TypeaheadSearchView(APIView):
                     ESDSLQ('match', title=query),
                     ESDSLQ('match', authoring_organizations__edge_ngram_completion=query),
                 ],
-                filter=[ESDSLQ('term', status=ProgramStatus.Active), ESDSLQ('term', partner=partner.short_code)],
+                filter=[ESDSLQ('term', status=ProgramStatus.Active), ESDSLQ('term', partner__raw=partner.short_code)],
                 must_not=[ESDSLQ('term', hidden=True)],
             )
         )
